@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Docente - Arianna Palacios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="container" id="main-container">
+            <div class="door-layer left-door"><div class="door-code" id="door-code-left"></div></div>
+            <div class="door-layer right-door"><div class="door-code" id="door-code-right"></div></div>
+
+            <canvas id="entityCanvas"></canvas>
+
+            <div class="neon-border-box">
+                <div class="neon-line top"></div>
+                <div class="neon-line right"></div>
+                <div class="neon-line bottom"></div>
+                <div class="neon-line left"></div>
+            </div>
+
+            <div id="screen-intro" class="screen active">
+                <h1>Evaluación docente</h1>
+                <p>Profesora: <span class="highlight">Arianna Palacios</span></p>
+                <p class="instrucciones">
+                    Instrucciones: Responde con sinceridad. <br>
+                    Tus respuestas son anónimas.
+                </p>
+                <p class="creditos">Adrián y Yair presentan</p>
+                <div id="timer" class="countdown">5</div>
+            </div>
+
+            <div id="screen-quiz" class="screen">
+                <p class="header-tag">Evaluación docente</p>
+                <h2 id="question-title">Cargando...</h2>
+                <div class="input-area">
+                    <textarea id="user-ans" rows="4" placeholder="Escribe tu análisis aquí..."></textarea>
+                </div>
+                <button type="button" class="generate-btn" id="next-btn">ENVIAR RESPUESTA</button>
+            </div>
+
+            <div id="screen-end" class="screen">
+                <div class="ai-bot">
+                    <div class="head">
+                        <div class="face"><div class="eyes"></div><div class="mouth"></div></div>
+                    </div>
+                </div>
+                <h1 class="animated-text">¡Has terminado!</h1>
+                <p class="animated-sub">Análisis procesado correctamente.</p>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
