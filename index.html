@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Docente - Profesora Arianna</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="container" id="main-container">
+            <canvas id="entityCanvas"></canvas>
+            <div class="cute-border-box">
+                <div class="cute-line top"></div>
+                <div class="cute-line right"></div>
+                <div class="cute-line bottom"></div>
+                <div class="cute-line left"></div>
+            </div>
+
+            <div id="screen-intro" class="screen active">
+                <div class="icon-header">📝</div>
+                <h1>Evaluación Docente</h1>
+                <p>Profesora: <span class="highlight">Arianna Palacios</span></p>
+                <p class="instrucciones">¡Tu opinión cuenta! Responde con sinceridad.<br>Todo es 100% anónimo. ✨</p>
+                <div id="timer" class="countdown">5</div>
+            </div>
+
+            <div id="screen-quiz" class="screen">
+                <h2 id="question-title">Cargando...</h2>
+                <div class="input-area">
+                    <textarea id="user-ans" rows="4" placeholder="Escribe aquí tu respuesta..."></textarea>
+                </div>
+                <button type="button" class="generate-btn" id="next-btn">Siguiente Pregunta 💖</button>
+            </div>
+
+            <div id="screen-end" class="screen">
+                <div class="ai-bot-cute"><div class="head"><div class="ears"></div><div class="face"><div class="eyes"></div><div class="mouth"></div></div></div></div>
+                <h1>¡Súper! ✨</h1>
+                <p>Tus respuestas se guardaron correctamente.</p>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

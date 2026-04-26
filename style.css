@@ -1,0 +1,87 @@
+:root {
+    --bg-white: #ffffff;
+    --text-main: #68767d;
+    --accent-blue: #99deff;
+    --border-color: #e1e8ed;
+}
+
+body { 
+    background: var(--bg-white); 
+    color: var(--text-main); 
+    margin: 0; 
+    overflow: hidden; 
+    height: 100vh; 
+    font-family: 'Quicksand', sans-serif; 
+}
+
+.main-wrapper { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100%; 
+    width: 100%; 
+    background: radial-gradient(circle at center, #f0faff 0%, #ffffff 100%); 
+}
+
+.container { 
+    background: #ffffff; 
+    padding: 40px; 
+    border-radius: 30px; 
+    width: 420px; 
+    min-height: 520px; 
+    text-align: center; 
+    position: relative; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(153, 222, 255, 0.2); 
+    border: 1px solid var(--border-color);
+    z-index: 10;
+}
+
+.screen { display: none; opacity: 0; position: relative; z-index: 5; }
+.screen.active { display: block; opacity: 1; transition: opacity 0.5s; }
+
+.cute-border-box { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.cute-line { position: absolute; background: var(--accent-blue); border-radius: 10px; opacity: 0.7; }
+.cute-line.top { top: 10px; left: 10px; height: 4px; animation: cuteDrawTop 3s linear infinite; }
+.cute-line.right { top: 10px; right: 10px; width: 4px; animation: cuteDrawRight 3s linear infinite; animation-delay: 0.75s; }
+.cute-line.bottom { bottom: 10px; right: 10px; height: 4px; animation: cuteDrawBottom 3s linear infinite; animation-delay: 1.5s; }
+.cute-line.left { bottom: 10px; left: 10px; width: 4px; animation: cuteDrawLeft 3s linear infinite; animation-delay: 2.25s; }
+
+@keyframes cuteDrawTop { 0% { width: 0; left: 10px; } 50% { width: calc(100% - 20px); left: 10px; } 100% { width: 0; left: calc(100% - 10px); } }
+@keyframes cuteDrawRight { 0% { height: 0; top: 10px; } 50% { height: calc(100% - 20px); top: 10px; } 100% { height: 0; top: calc(100% - 10px); } }
+@keyframes cuteDrawBottom { 0% { width: 0; right: 10px; } 50% { width: calc(100% - 20px); right: 10px; } 100% { width: 0; right: calc(100% - 10px); } }
+@keyframes cuteDrawLeft { 0% { height: 0; bottom: 10px; } 50% { height: calc(100% - 20px); top: 10px; } 100% { height: 0; top: calc(100% - 10px); } }
+
+.icon-header { font-size: 3rem; margin-bottom: 10px; }
+h1 { font-weight: 700; color: var(--text-main); font-size: 1.8rem; margin: 10px 0; }
+h2 { color: var(--text-main); font-weight: 600; font-size: 1.2rem; min-height: 3em; }
+.highlight { color: var(--accent-blue); font-weight: 700; }
+.instrucciones { font-size: 0.9rem; line-height: 1.6; color: #8a99a1; }
+.countdown { font-size: 5rem; color: var(--accent-blue); font-weight: 700; margin: 15px 0; }
+.generate-btn { 
+    background: var(--accent-blue); border: none; color: white; padding: 15px; 
+    border-radius: 50px; cursor: pointer; margin-top: 25px; width: 100%; 
+    font-weight: 700; font-size: 1rem; box-shadow: 0 5px 15px rgba(153, 222, 255, 0.4);
+    transition: all 0.3s ease;
+}
+.generate-btn:hover { background: #7cd3ff; transform: translateY(-2px); }
+textarea { 
+    width: 100%; background: #fcfdfe; border: 2px solid #edf2f5; color: var(--text-main); 
+    padding: 15px; border-radius: 15px; margin-top: 15px; resize: none; 
+    box-sizing: border-box; font-family: inherit; font-size: 0.9rem;
+}
+#entityCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 150; display: none; pointer-events: none; }
+
+.ai-bot-cute { width: 100px; height: 120px; margin: 0 auto 20px; position: relative; animation: floatCute 3s infinite ease-in-out; }
+.ai-bot-cute .head { width: 90px; height: 80px; background: #fcfdfe; border: 2px solid var(--accent-blue); border-radius: 30px 30px 15px 15px; margin: 20px auto 0; position: relative; }
+.ai-bot-cute .ears::before, .ai-bot-cute .ears::after { content: ""; position: absolute; top: -15px; width: 25px; height: 25px; background: var(--accent-blue); border-radius: 50%; z-index: -1; }
+.ai-bot-cute .ears::before { left: 10px; } .ai-bot-cute .ears::after { right: 10px; }
+.ai-bot-cute .face { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; position: relative; }
+.ai-bot-cute .eyes::before, .ai-bot-cute .eyes::after { content: "•"; color: var(--text-main); font-size: 2.2rem; margin: 0 8px; animation: blinkCute 4s infinite; }
+.ai-bot-cute .mouth { width: 15px; height: 8px; border-bottom: 3px solid var(--text-main); border-radius: 0 0 10px 10px; margin-top: -5px; }
+
+@keyframes floatCute { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes blinkCute { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
