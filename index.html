@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Docente - Profesora Arianna</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-white: #ffffff;
+            --text-main: #68767d;
+            --accent-blue: #99deff;
+            --border-color: #e1e8ed;
+        }
+
+        body { 
+            background: var(--bg-white); 
+            color: var(--text-main); 
+            margin: 0; 
+            overflow: hidden; 
+            height: 100vh; 
+            font-family: 'Quicksand', sans-serif; 
+        }
+
+        .main-wrapper { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100%; 
+            width: 100%; 
+            background: radial-gradient(circle at center, #f0faff 0%, #ffffff 100%); 
+        }
+
+        .container { 
+            background: #ffffff; 
+            padding: 40px; 
+            border-radius: 30px; 
+            width: 420px; 
+            min-height: 520px; 
+            text-align: center; 
+            position: relative; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(153, 222, 255, 0.2); 
+            border: 1px solid var(--border-color);
+            z-index: 10;
+        }
+
+        .screen { display: none; opacity: 0; position: relative; z-index: 5; }
+        .screen.active { display: block; opacity: 1; transition: opacity 0.5s; }
+
+        /* BORDE PASTEL ANIMADO */
+        .cute-border-box { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+        .cute-line { position: absolute; background: var(--accent-blue); border-radius: 10px; opacity: 0.7; }
+        .cute-line.top { top: 10px; left: 10px; height: 4px; animation: cuteDrawTop 3s linear infinite; }
+        .cute-line.right { top: 10px; right: 10px; width: 4px; animation: cuteDrawRight 3s linear infinite; animation-delay: 0.75s; }
+        .cute-line.bottom { bottom: 10px; right: 10px; height: 4px; animation: cuteDrawBottom 3s linear infinite; animation-delay: 1.5s; }
+        .cute-line.left { bottom: 10px; left: 10px; width: 4px; animation: cuteDrawLeft 3s linear infinite; animation-delay: 2.25s; }
+
+        @keyframes cuteDrawTop { 0% { width: 0; left: 10px; } 50% { width: calc(100% - 20px); left: 10px; } 100% { width: 0; left: calc(100% - 10px); } }
+        @keyframes cuteDrawRight { 0% { height: 0; top: 10px; } 50% { height: calc(100% - 20px); top: 10px; } 100% { height: 0; top: calc(100% - 10px); } }
+        @keyframes cuteDrawBottom { 0% { width: 0; right: 10px; } 50% { width: calc(100% - 20px); right: 10px; } 100% { width: 0; right: calc(100% - 10px); } }
+        @keyframes cuteDrawLeft { 0% { height: 0; bottom: 10px; } 50% { height: calc(100% - 20px); top: 10px; } 100% { height: 0; top: calc(100% - 10px); } }
+
+        /* UI ELEMENTS */
+        .icon-header { font-size: 3rem; margin-bottom: 10px; }
+        h1 { font-weight: 700; color: var(--text-main); font-size: 1.8rem; margin: 10px 0; }
+        h2 { color: var(--text-main); font-weight: 600; font-size: 1.2rem; min-height: 3em; }
+        .highlight { color: var(--accent-blue); font-weight: 700; }
+        .instrucciones { font-size: 0.9rem; line-height: 1.6; color: #8a99a1; }
+        .countdown { font-size: 5rem; color: var(--accent-blue); font-weight: 700; margin: 15px 0; }
+        .generate-btn { 
+            background: var(--accent-blue); border: none; color: white; padding: 15px; 
+            border-radius: 50px; cursor: pointer; margin-top: 25px; width: 100%; 
+            font-weight: 700; font-size: 1rem; box-shadow: 0 5px 15px rgba(153, 222, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .generate-btn:hover { background: #7cd3ff; transform: translateY(-2px); }
+        textarea { 
+            width: 100%; background: #fcfdfe; border: 2px solid #edf2f5; color: var(--text-main); 
+            padding: 15px; border-radius: 15px; margin-top: 15px; resize: none; 
+            box-sizing: border-box; font-family: inherit; font-size: 0.9rem;
+        }
+        #entityCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 150; display: none; pointer-events: none; }
+
+        /* AI BOT CUTE */
+        .ai-bot-cute { width: 100px; height: 120px; margin: 0 auto 20px; position: relative; animation: floatCute 3s infinite ease-in-out; }
+        .ai-bot-cute .head { width: 90px; height: 80px; background: #fcfdfe; border: 2px solid var(--accent-blue); border-radius: 30px 30px 15px 15px; margin: 20px auto 0; position: relative; }
+        .ai-bot-cute .ears::before, .ai-bot-cute .ears::after { content: ""; position: absolute; top: -15px; width: 25px; height: 25px; background: var(--accent-blue); border-radius: 50%; z-index: -1; }
+        .ai-bot-cute .ears::before { left: 10px; } .ai-bot-cute .ears::after { right: 10px; }
+        .ai-bot-cute .face { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; position: relative; }
+        .ai-bot-cute .eyes::before, .ai-bot-cute .eyes::after { content: "•"; color: var(--text-main); font-size: 2.2rem; margin: 0 8px; animation: blinkCute 4s infinite; }
+        .ai-bot-cute .mouth { width: 15px; height: 8px; border-bottom: 3px solid var(--text-main); border-radius: 0 0 10px 10px; margin-top: -5px; }
+
+        @keyframes floatCute { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes blinkCute { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="container" id="main-container">
+            <canvas id="entityCanvas"></canvas>
+            <div class="cute-border-box">
+                <div class="cute-line top"></div>
+                <div class="cute-line right"></div>
+                <div class="cute-line bottom"></div>
+                <div class="cute-line left"></div>
+            </div>
+
+            <div id="screen-intro" class="screen active">
+                <div class="icon-header">📝</div>
+                <h1>Evaluación Docente</h1>
+                <p>Profesora: <span class="highlight">Arianna Palacios</span></p>
+                <p class="instrucciones">¡Tu opinión cuenta! Responde con sinceridad.<br>Todo es 100% anónimo. ✨</p>
+                <div id="timer" class="countdown">5</div>
+            </div>
+
+            <div id="screen-quiz" class="screen">
+                <h2 id="question-title">Cargando...</h2>
+                <div class="input-area">
+                    <textarea id="user-ans" rows="4" placeholder="Escribe aquí tu respuesta..."></textarea>
+                </div>
+                <button type="button" class="generate-btn" id="next-btn">Siguiente Pregunta 💖</button>
+            </div>
+
+            <div id="screen-end" class="screen">
+                <div class="ai-bot-cute"><div class="head"><div class="ears"></div><div class="face"><div class="eyes"></div><div class="mouth"></div></div></div></div>
+                <h1>¡Súper! ✨</h1>
+                <p>Tus respuestas se guardaron correctamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDK6dSkVHRZ_BWqboSBlcTV_MyUZAxV6xI",
+            authDomain: "encuesta--maestra--arianna.firebaseapp.com",
+            databaseURL: "https://encuesta--maestra--arianna-default-rtdb.firebaseio.com",
+            projectId: "encuesta--maestra--arianna",
+            storageBucket: "encuesta--maestra--arianna.firebasestorage.app",
+            messagingSenderId: "1074844690438",
+            appId: "1:1074844690438:web:ba695905600d21f1063b87"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const sessionRef = push(ref(db, 'respuestas'));
+
+        const questions = [
+            "1. ¿Qué hizo la profesora este semestre que realmente te ayudó a entender mejor la materia?",
+            "2. ¿En qué momento de las clases sentiste que te perdías o dejabas de entender?",
+            "3. Si tuvieras que describir con 3 palabras cómo da clase la profesora ¿cuáles serían?",
+            "4. ¿Consideras que deberían haber más dinámicas en clase?",
+            "5. ¿La profesora logró que te interesara más la materia o menos?",
+            "6. ¿Cómo maneja la profesora las preguntas “tontas” o cuando alguien se equivoca?",
+            "7. ¿Qué diferencia notas entre esta profesora y el mejor maestro/maestra que consideras tener?",
+            "8. ¿Qué propones que se podría hacer en clase para mejorar la forma de aprender?",
+            "9. ¿Qué cosa concreta debería dejar de hacer, seguir haciendo, y empezar a hacer?",
+            "10. Si pudieras cambiar UNA sola cosa para que todos aprendieran más ¿qué sería?",
+            "11. Del 1 al 10 ¿Cómo calificas a la maestra?"
+        ];
+
+        let idx = 0;
+        const canvas = document.getElementById('entityCanvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.getElementById('main-container');
+        const input = document.getElementById('user-ans');
+        const btn = document.getElementById('next-btn');
+        const questionTitle = document.getElementById('question-title');
+
+        // Partículas Cute
+        let entities = [];
+        let isTransitioning = false;
+        class Entity {
+            constructor(w, h) { this.w = w; this.h = h; this.reset(); }
+            reset() { this.x = this.w/2; this.y = this.h/2; this.vx = (Math.random()-0.5)*15; this.vy = (Math.random()-0.5)*15; this.size = Math.random()*4+2; this.alpha = 1; }
+            update() { this.x += this.vx; this.y += this.vy; this.vx *= 0.96; this.vy *= 0.96; this.alpha -= 0.02; }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fillStyle = `rgba(153, 222, 255, ${this.alpha})`; ctx.fill(); }
+        }
+
+        function particleLoop() {
+            if (isTransitioning) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                entities.forEach(e => { e.update(); e.draw(); });
+                if(entities.every(e => e.alpha <= 0)) isTransitioning = false;
+            }
+            requestAnimationFrame(particleLoop);
+        }
+
+        window.addEventListener('load', () => {
+            let t = 5;
+            const cd = setInterval(() => {
+                t--;
+                document.getElementById('timer').innerText = t;
+                if(t <= 0) {
+                    clearInterval(cd);
+                    document.getElementById('screen-intro').classList.remove('active');
+                    document.getElementById('screen-quiz').classList.add('active');
+                    questionTitle.innerText = questions[idx];
+                    input.focus();
+                }
+            }, 1000);
+        });
+
+        btn.onclick = async () => {
+            const val = input.value.trim();
+            if(!val) return;
+            btn.disabled = true;
+
+            await set(ref(db, `respuestas/${sessionRef.key}/pregunta_${idx + 1}`), {
+                pregunta: questions[idx], respuesta: val, hora: new Date().toLocaleTimeString()
+            });
+
+            canvas.width = container.offsetWidth; canvas.height = container.offsetHeight;
+            canvas.style.display = "block";
+            entities = Array.from({length: 30}, () => new Entity(canvas.width, canvas.height));
+            isTransitioning = true;
+            particleLoop();
+
+            setTimeout(() => {
+                if(idx < questions.length - 1) {
+                    idx++;
+                    questionTitle.innerText = questions[idx];
+                    input.value = "";
+                    canvas.style.display = "none";
+                    input.focus();
+                } else {
+                    document.getElementById('screen-quiz').classList.remove('active');
+                    document.getElementById('screen-end').classList.add('active');
+                    canvas.style.display = "none";
+                }
+                btn.disabled = false;
+            }, 800);
+        };
+    </script>
+</body>
+</html>
